@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PU Prime - 고객 DB 관리</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            padding: 40px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        h1 {
+            font-size: 28px;
+            color: #fff;
+        }
+        h1 span { color: #0052FF; }
+        .stats-bar {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .stat-box {
+            background: #12121a;
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 20px 30px;
+            flex: 1;
+        }
+        .stat-box .num {
+            font-size: 36px;
+            font-weight: 900;
+            color: #0052FF;
+        }
+        .stat-box .label {
+            font-size: 14px;
+            color: #888;
+            margin-top: 4px;
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-blue { background: #0052FF; color: #fff; }
+        .btn-blue:hover { background: #0041CC; }
+        .btn-red { background: #ff4757; color: #fff; }
+        .btn-red:hover { background: #e63946; }
+        .btn-green { background: #00c853; color: #fff; }
+        .btn-green:hover { background: #00a844; }
+        .btn-outline {
+            background: transparent;
+            color: #e0e0e0;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .btn-outline:hover { border-color: #0052FF; color: #0052FF; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #12121a;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        th {
+            background: #1a1a25;
+            padding: 14px 16px;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 600;
+            color: #888;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        td {
+            padding: 14px 16px;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+        tr:hover td { background: rgba(0,82,255,0.05); }
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge-beginner { background: rgba(0,212,255,0.15); color: #00d4ff; }
+        .badge-intermediate { background: rgba(0,200,83,0.15); color: #00c853; }
+        .badge-advanced { background: rgba(255,215,0,0.15); color: #ffd700; }
+        .badge-none { background: rgba(255,71,87,0.15); color: #ff4757; }
+        .interest-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            background: rgba(0,82,255,0.1);
+            color: #3375FF;
+            border-radius: 4px;
+            font-size: 11px;
+            margin: 2px;
+        }
+        .empty {
+            text-align: center;
+            padding: 60px;
+            color: #666;
+        }
+        .empty i { font-size: 48px; display: block; margin-bottom: 16px; }
+        .back-link {
+            color: #0052FF;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1><span>PU Prime</span> 고객 DB 관리</h1>
+        <a href="index.html" class="back-link">메인 사이트로 돌아가기</a>
+    </div>
+
+    <div class="stats-bar">
+        <div class="stat-box">
+            <div class="num" id="totalCount">0</div>
+            <div class="label">총 상담 신청</div>
+        </div>
+        <div class="stat-box">
+            <div class="num" id="todayCount">0</div>
+            <div class="label">오늘 신청</div>
+        </div>
+        <div class="stat-box">
+            <div class="num" id="beginnerCount">0</div>
+            <div class="label">초보 투자자</div>
+        </div>
+        <div class="stat-box">
+            <div class="num" id="topInterest">-</div>
+            <div class="label">인기 관심상품</div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="btn btn-blue" onclick="refreshData()">새로고침</button>
+        <button class="btn btn-green" onclick="exportCSV()">CSV 다운로드</button>
+        <button class="btn btn-red" onclick="clearAll()">전체 삭제</button>
+        <button class="btn btn-outline" onclick="addTestData()">테스트 데이터 추가</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>이름</th>
+                <th>연락처</th>
+                <th>투자 경험</th>
+                <th>관심 상품</th>
+                <th>예상 투자금</th>
+                <th>신청 일시</th>
+            </tr>
+        </thead>
+        <tbody id="dataBody">
+        </tbody>
+    </table>
+
+    <script>
+        const expLabels = {
+            beginner: '초보',
+            intermediate: '중급',
+            advanced: '고급',
+            none: '없음'
+        };
+        const interestLabels = {
+            forex: '외환',
+            gold: '금/원자재',
+            stocks: '해외주식',
+            crypto: '암호화폐',
+            indices: '지수'
+        };
+        const investLabels = {
+            'under100': '100만원 미만',
+            '100-500': '100~500만원',
+            '500-1000': '500~1000만원',
+            'over1000': '1000만원 이상'
+        };
+
+        function getData() {
+            return JSON.parse(localStorage.getItem('pu_prime_leads') || '[]');
+        }
+
+        function refreshData() {
+            const data = getData();
+            const body = document.getElementById('dataBody');
+
+            // Stats
+            document.getElementById('totalCount').textContent = data.length;
+
+            const today = new Date().toISOString().split('T')[0];
+            const todayData = data.filter(d => d.timestamp && d.timestamp.startsWith(today));
+            document.getElementById('todayCount').textContent = todayData.length;
+
+            const beginners = data.filter(d => d.experience === 'beginner' || d.experience === 'none');
+            document.getElementById('beginnerCount').textContent = beginners.length;
+
+            // Top interest
+            const allInterests = data.flatMap(d => d.interests || []);
+            if (allInterests.length > 0) {
+                const freq = {};
+                allInterests.forEach(i => freq[i] = (freq[i] || 0) + 1);
+                const top = Object.entries(freq).sort((a, b) => b[1] - a[1])[0][0];
+                document.getElementById('topInterest').textContent = interestLabels[top] || top;
+            }
+
+            // Table
+            if (data.length === 0) {
+                body.innerHTML = '<tr><td colspan="7" class="empty">아직 신청 데이터가 없습니다.<br>메인 사이트에서 상담 폼을 제출해보세요.</td></tr>';
+                return;
+            }
+
+            body.innerHTML = data.map((d, i) => `
+                <tr>
+                    <td>${i + 1}</td>
+                    <td><strong>${d.name || '-'}</strong></td>
+                    <td>${d.phone || '-'}</td>
+                    <td><span class="badge badge-${d.experience || 'none'}">${expLabels[d.experience] || '-'}</span></td>
+                    <td>${(d.interests || []).map(t => `<span class="interest-tag">${interestLabels[t] || t}</span>`).join('')}</td>
+                    <td>${investLabels[d.investment] || '-'}</td>
+                    <td>${d.timestamp ? new Date(d.timestamp).toLocaleString('ko-KR') : '-'}</td>
+                </tr>
+            `).join('');
+        }
+
+        function clearAll() {
+            if (confirm('모든 데이터를 삭제하시겠습니까?')) {
+                localStorage.removeItem('pu_prime_leads');
+                refreshData();
+            }
+        }
+
+        function exportCSV() {
+            const data = getData();
+            if (data.length === 0) { alert('데이터가 없습니다.'); return; }
+
+            const headers = ['이름', '연락처', '투자경험', '관심상품', '예상투자금', '신청일시'];
+            const rows = data.map(d => [
+                d.name,
+                d.phone,
+                expLabels[d.experience] || d.experience,
+                (d.interests || []).map(t => interestLabels[t] || t).join('/'),
+                investLabels[d.investment] || d.investment || '',
+                d.timestamp ? new Date(d.timestamp).toLocaleString('ko-KR') : ''
+            ]);
+
+            const csv = '\uFEFF' + [headers, ...rows].map(r => r.join(',')).join('\n');
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `pu_prime_leads_${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function addTestData() {
+            const names = ['김민수', '이지현', '박서준', '최유나', '정태영'];
+            const exps = ['beginner', 'intermediate', 'advanced', 'none'];
+            const ints = ['forex', 'gold', 'stocks', 'crypto', 'indices'];
+            const invs = ['under100', '100-500', '500-1000', 'over1000'];
+
+            const testData = {
+                name: names[Math.floor(Math.random() * names.length)],
+                phone: '010-' + String(Math.floor(Math.random() * 9000) + 1000) + '-' + String(Math.floor(Math.random() * 9000) + 1000),
+                experience: exps[Math.floor(Math.random() * exps.length)],
+                interests: ints.sort(() => Math.random() - 0.5).slice(0, Math.floor(Math.random() * 3) + 1),
+                investment: invs[Math.floor(Math.random() * invs.length)],
+                agreeMarketing: true,
+                agreePromotion: Math.random() > 0.5,
+                timestamp: new Date().toISOString()
+            };
+
+            const saved = getData();
+            saved.push(testData);
+            localStorage.setItem('pu_prime_leads', JSON.stringify(saved));
+            refreshData();
+        }
+
+        // Init
+        refreshData();
+    </script>
+</body>
+</html>

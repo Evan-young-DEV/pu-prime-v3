@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 60" fill="none">
+  <!-- P Icon -->
+  <path d="M8 52 C8 52 8 8 8 8 C8 3 12 0 16 0 C20 0 24 3 24 8 L24 35 C24 35 28 28 35 22 C40 18 46 20 48 26 C50 32 47 40 40 44 C35 47 28 45 24 40" fill="#1560FF"/>
+  <path d="M30 8 C30 3 34 0 38 0 C42 0 46 3 46 8 L46 20 C50 14 56 12 62 16 C66 19 68 26 64 32 C60 37 53 38 48 34" fill="#1560FF" opacity="0.7"/>
+  <!-- PUPRIME Text -->
+  <text x="78" y="43" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="38" fill="#FFFFFF" letter-spacing="2">PUPRIME</text>
+</svg>

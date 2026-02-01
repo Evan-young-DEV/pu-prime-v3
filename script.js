@@ -407,9 +407,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         function startAutoSlide() {
+            const isMobile = window.innerWidth <= 768;
+            const interval = isMobile ? 1700 : 2500;
             autoSlideInterval = setInterval(() => {
                 goToSlide(currentSlide + 1);
-            }, 1700);
+            }, interval);
         }
 
         function stopAutoSlide() {

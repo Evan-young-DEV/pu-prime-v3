@@ -136,6 +136,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Phone Number Auto Format
     // ========================================
     const phoneInput = document.getElementById('phone');
+    if (phoneInput) {
     phoneInput.addEventListener('input', function(e) {
         let value = e.target.value.replace(/[^0-9]/g, '');
 
@@ -151,6 +152,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         e.target.value = value;
     });
+    }
 
     // ========================================
     // Header Scroll Effect
@@ -364,6 +366,115 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ========================================
+
+    // ========================================
+    // Backtest Slider (Touch Swipe + Auto)
+    // ========================================
+    const backtestSlider = document.getElementById('backtestSlider');
+    const backtestTrack = document.getElementById('backtestTrack');
+    const backtestDots = document.getElementById('backtestDots');
+
+    if (backtestSlider && backtestTrack && backtestDots) {
+        const slides = backtestTrack.querySelectorAll('.backtest-slide');
+        const totalSlides = slides.length;
+        let currentSlide = 0;
+        let startX = 0;
+        let currentX = 0;
+        let isDragging = false;
+        let autoSlideInterval;
+
+        // Create dots
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'backtest-dot' + (i === 0 ? ' active' : '');
+            dot.addEventListener('click', () => goToSlide(i));
+            backtestDots.appendChild(dot);
+        }
+
+        function updateDots() {
+            const dots = backtestDots.querySelectorAll('.backtest-dot');
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlide);
+            });
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            if (currentSlide >= totalSlides) currentSlide = 0;
+            if (currentSlide < 0) currentSlide = totalSlides - 1;
+            backtestTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+            updateDots();
+        }
+
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(() => {
+                goToSlide(currentSlide + 1);
+            }, 1700);
+        }
+
+        function stopAutoSlide() {
+            clearInterval(autoSlideInterval);
+        }
+
+        // Touch events
+        backtestSlider.addEventListener('touchstart', (e) => {
+            stopAutoSlide();
+            isDragging = true;
+            startX = e.touches[0].clientX;
+        });
+
+        backtestSlider.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            currentX = e.touches[0].clientX;
+        });
+
+        backtestSlider.addEventListener('touchend', () => {
+            if (!isDragging) return;
+            isDragging = false;
+            const diff = startX - currentX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    goToSlide(currentSlide + 1);
+                } else {
+                    goToSlide(currentSlide - 1);
+                }
+            }
+            setTimeout(startAutoSlide, 5000);
+        });
+
+        // Mouse events for desktop
+        backtestSlider.addEventListener('mousedown', (e) => {
+            stopAutoSlide();
+            isDragging = true;
+            startX = e.clientX;
+        });
+
+        backtestSlider.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            currentX = e.clientX;
+        });
+
+        backtestSlider.addEventListener('mouseup', () => {
+            if (!isDragging) return;
+            isDragging = false;
+            const diff = startX - currentX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    goToSlide(currentSlide + 1);
+                } else {
+                    goToSlide(currentSlide - 1);
+                }
+            }
+            setTimeout(startAutoSlide, 5000);
+        });
+
+        backtestSlider.addEventListener('mouseleave', () => {
+            isDragging = false;
+        });
+
+        // Start auto slide
+        startAutoSlide();
+    }
 
     console.log('PU Prime website initialized successfully!');
 });

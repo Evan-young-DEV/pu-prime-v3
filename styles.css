@@ -78,6 +78,17 @@ ul {
     list-style: none;
 }
 
+/* Utility Classes */
+.mobile-only {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .mobile-only {
+        display: inline;
+    }
+}
+
 img {
     max-width: 100%;
     height: auto;
@@ -1068,6 +1079,74 @@ img {
    Floating DB Form (Insurance Style)
    ======================================== */
 /* ========================================
+   Bigtech Backtest Section
+   ======================================== */
+.bigtech-backtest {
+    padding: 80px 0;
+    background: var(--bg-dark);
+}
+
+.backtest-slider {
+    margin-top: 40px;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+.backtest-track {
+    display: flex;
+    transition: transform 0.4s ease-out;
+}
+
+.backtest-slide {
+    width: 100%;
+    min-width: 100%;
+    flex-shrink: 0;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.backtest-slide img {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    display: block;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+    .backtest-title {
+        font-size: 24px;
+    }
+    .backtest-title::after {
+        content: "";
+    }
+}
+
+.backtest-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.backtest-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.backtest-dot.active {
+    background: var(--primary-blue);
+    transform: scale(1.2);
+}
+
+/* ========================================
    Mobile Popup Form
    ======================================== */
 .mobile-popup-overlay {
@@ -1622,6 +1701,10 @@ img {
 
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    .products {
+        display: none;
     }
 
     .products-grid,

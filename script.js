@@ -4,35 +4,62 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     // ========================================
+    // Mobile Popup (shows after 1.5s on mobile)
+    // ========================================
+    const mobilePopup = document.getElementById('mobilePopup');
+    const popupClose = document.getElementById('popupClose');
+
+    if (window.innerWidth <= 768) {
+        setTimeout(function() {
+            if (mobilePopup) {
+                mobilePopup.classList.add('active');
+            }
+        }, 1500);
+    }
+
+    if (popupClose) {
+        popupClose.addEventListener('click', function() {
+            mobilePopup.classList.remove('active');
+        });
+    }
+
+    if (mobilePopup) {
+        mobilePopup.addEventListener('click', function(e) {
+            if (e.target === mobilePopup) {
+                mobilePopup.classList.remove('active');
+            }
+        });
+    }
+
+    // ========================================
     // Floating Form Toggle
     // ========================================
     const formToggle = document.getElementById('formToggle');
     const formContainer = document.getElementById('formContainer');
     const formClose = document.getElementById('formClose');
 
-    // Form always open on load
-    formContainer.classList.add('active');
-    formToggle.style.display = 'none';
-
-    formToggle.addEventListener('click', function() {
+    if (formContainer && formToggle) {
+        // Form always open on load
         formContainer.classList.add('active');
         formToggle.style.display = 'none';
-    });
 
-    formClose.addEventListener('click', function() {
-        // Reopen after short delay - always keep visible
-        formContainer.classList.remove('active');
-        formToggle.style.display = 'flex';
-        setTimeout(function() {
+        formToggle.addEventListener('click', function() {
             formContainer.classList.add('active');
             formToggle.style.display = 'none';
-        }, 3000);
-    });
+        });
+    }
 
-    // Do NOT close on outside click - keep form always visible
-    document.addEventListener('click', function(e) {
-        // disabled: form stays open
-    });
+    if (formClose && formContainer && formToggle) {
+        formClose.addEventListener('click', function() {
+            // Reopen after short delay - always keep visible
+            formContainer.classList.remove('active');
+            formToggle.style.display = 'flex';
+            setTimeout(function() {
+                formContainer.classList.add('active');
+                formToggle.style.display = 'none';
+            }, 3000);
+        });
+    }
 
     // ========================================
     // Form Validation & Submission

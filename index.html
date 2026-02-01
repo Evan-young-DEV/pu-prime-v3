@@ -101,6 +101,7 @@
                         <div class="rolling-slide"><img src="slide4.png" alt="실제계좌 4"></div>
                         <div class="rolling-slide"><img src="slide5.png" alt="실제계좌 5"></div>
                         <div class="rolling-slide"><img src="slide6.png" alt="실제계좌 6"></div>
+                        <div class="rolling-slide"><img src="slide1.png" alt="실제계좌 1"></div>
                     </div>
                 </div>
                 <div class="hero-news">
@@ -698,6 +699,36 @@
     </footer>
 
 
+
+    <!-- Mobile Popup Form -->
+    <div class="mobile-popup-overlay" id="mobilePopup">
+        <div class="mobile-popup">
+            <button class="popup-close" id="popupClose">&times;</button>
+            <h3>무료 투자 상담 신청</h3>
+            <p>전문 상담원이 1:1로 안내해 드립니다</p>
+            <form class="popup-form" id="popupConsultationForm">
+                <div class="form-group">
+                    <label>이름</label>
+                    <input type="text" name="name" placeholder="이름을 입력해주세요." required>
+                </div>
+                <div class="form-group">
+                    <label>연락처</label>
+                    <input type="tel" name="phone" placeholder="'-' 없이 입력해 주세요." required>
+                </div>
+                <div class="form-group">
+                    <label>예상 투자금액</label>
+                    <select name="investment" required>
+                        <option value="">선택해주세요</option>
+                        <option value="under100">100만원 미만</option>
+                        <option value="100-500">100~500만원</option>
+                        <option value="500-1000">500~1000만원</option>
+                        <option value="over1000">1000만원 이상</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">지금 무료 상담받기</button>
+            </form>
+        </div>
+    </div>
 
     <!-- Telegram Button -->
     <a href="https://t.me/PUPrimeGuide" target="_blank" class="telegram-float" title="텔레그램 상담">

@@ -62,117 +62,74 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ========================================
-    // Form Validation & Submission
+    // Hero & Popup Form Submission
     // ========================================
-    const consultationForm = document.getElementById('consultationForm');
-    const agreeAll = document.getElementById('agreeAll');
-    const agreementCheckboxes = document.querySelectorAll('.agreement-items input[type="checkbox"]');
+    const heroForm = document.getElementById('heroConsultationForm');
+    const popupForm = document.getElementById('popupConsultationForm');
 
-    // Agree All functionality
-    agreeAll.addEventListener('change', function() {
-        agreementCheckboxes.forEach(checkbox => {
-            checkbox.checked = this.checked;
-        });
-    });
-
-    // Update Agree All when individual checkboxes change
-    agreementCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
-            const allChecked = Array.from(agreementCheckboxes).every(cb => cb.checked);
-            agreeAll.checked = allChecked;
-        });
-    });
-
-    // Form submission
-    consultationForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        // Validate required fields
-        const name = document.getElementById('name').value.trim();
-        const phone = document.getElementById('phone').value.trim();
-        const experience = document.getElementById('experience').value;
-        const interests = document.querySelectorAll('input[name="interest"]:checked');
-        const agree1 = document.querySelector('input[name="agree1"]').checked;
-        const agree2 = document.querySelector('input[name="agree2"]').checked;
-
-        if (!name) {
-            alert('이름을 입력해주세요.');
-            document.getElementById('name').focus();
-            return;
-        }
-
-        if (!phone) {
-            alert('연락처를 입력해주세요.');
-            document.getElementById('phone').focus();
-            return;
-        }
-
-        // Phone number validation
-        const phoneRegex = /^01[0-9]-?[0-9]{3,4}-?[0-9]{4}$/;
-        if (!phoneRegex.test(phone.replace(/-/g, ''))) {
-            alert('올바른 연락처 형식을 입력해주세요.');
-            document.getElementById('phone').focus();
-            return;
-        }
-
-        if (!experience) {
-            alert('투자 경험을 선택해주세요.');
-            document.getElementById('experience').focus();
-            return;
-        }
-
-        if (interests.length === 0) {
-            alert('관심 상품을 하나 이상 선택해주세요.');
-            return;
-        }
-
-        if (!agree1 || !agree2) {
-            alert('필수 약관에 동의해주세요.');
-            return;
-        }
-
-        // Collect form data
-        const formData = {
-            name: name,
-            phone: phone,
-            experience: experience,
-            interests: Array.from(interests).map(i => i.value),
-            investment: document.getElementById('investment').value,
-            agreeMarketing: agree2,
-            agreePromotion: document.querySelector('input[name="agree3"]').checked,
+    function saveFormData(form) {
+        const formData = new FormData(form);
+        const data = {
+            name: formData.get('name'),
+            phone: formData.get('phone'),
+            investment: formData.get('investment'),
             timestamp: new Date().toISOString()
         };
 
-        console.log('Form Data:', formData);
-
         // Save to localStorage
         const savedData = JSON.parse(localStorage.getItem('pu_prime_leads') || '[]');
-        savedData.push(formData);
+        savedData.push(data);
         localStorage.setItem('pu_prime_leads', JSON.stringify(savedData));
         console.log('Saved! Total leads:', savedData.length);
+        return data;
+    }
 
-        // Show success message
-        showSuccessMessage();
-    });
-
-    function showSuccessMessage() {
-        const formContent = consultationForm.innerHTML;
-        consultationForm.innerHTML = `
-            <div class="success-message" style="text-align: center; padding: 40px 20px;">
-                <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #00c853 0%, #00d4ff 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
-                    <i class="fas fa-check" style="font-size: 36px; color: white;"></i>
+    function showFormSuccess(form) {
+        form.innerHTML = `
+            <div style="text-align: center; padding: 30px 10px;">
+                <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #00c853 0%, #00d4ff 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px;">
+                    <i class="fas fa-check" style="font-size: 28px; color: white;"></i>
                 </div>
-                <h3 style="font-size: 22px; font-weight: 700; color: #333; margin-bottom: 12px;">상담 신청 완료!</h3>
-                <p style="font-size: 14px; color: #666; line-height: 1.6;">
+                <h3 style="font-size: 20px; font-weight: 700; color: white; margin-bottom: 10px;">상담 신청 완료!</h3>
+                <p style="font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.5;">
                     신청해 주셔서 감사합니다.<br>
-                    전문 상담원이 빠른 시일 내에<br>
-                    연락드리겠습니다.
+                    빠른 시일 내에 연락드리겠습니다.
                 </p>
-                <button type="button" class="btn btn-primary" style="margin-top: 20px; padding: 12px 30px;" onclick="location.reload()">
-                    확인
-                </button>
             </div>
         `;
+    }
+
+    if (heroForm) {
+        heroForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = this.querySelector('input[name="name"]').value.trim();
+            const phone = this.querySelector('input[name="phone"]').value.trim();
+
+            if (!name) { alert('이름을 입력해주세요.'); return; }
+            if (!phone) { alert('연락처를 입력해주세요.'); return; }
+
+            saveFormData(this);
+            showFormSuccess(this);
+        });
+    }
+
+    if (popupForm) {
+        popupForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = this.querySelector('input[name="name"]').value.trim();
+            const phone = this.querySelector('input[name="phone"]').value.trim();
+
+            if (!name) { alert('이름을 입력해주세요.'); return; }
+            if (!phone) { alert('연락처를 입력해주세요.'); return; }
+
+            saveFormData(this);
+            showFormSuccess(this);
+
+            // Close popup after 2 seconds
+            setTimeout(function() {
+                if (mobilePopup) mobilePopup.classList.remove('active');
+            }, 2000);
+        });
     }
 
     // ========================================

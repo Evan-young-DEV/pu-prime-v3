@@ -73,6 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
             name: formData.get('name'),
             phone: formData.get('phone'),
             investment: formData.get('investment'),
+            preferred_time: formData.get('preferred_time'),
             timestamp: new Date().toISOString()
         };
 

@@ -1660,8 +1660,10 @@ img {
     }
 
     .hero-ea .ea-provider {
-        font-size: 14px;
-        margin-bottom: 3px;
+        font-size: 18px;
+        font-weight: 700;
+        color: #00D4FF;
+        margin-bottom: 8px;
     }
 
     .hero-ea .ea-title {
@@ -1781,7 +1783,9 @@ img {
     }
 
     .hero-ea .ea-provider {
-        font-size: 12px;
+        font-size: 16px;
+        font-weight: 700;
+        color: #00D4FF;
     }
 
     .hero-ea .ea-title {
@@ -2140,10 +2144,10 @@ img {
 }
 
 .hero-ea .ea-provider {
-    font-size: 18px;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.7);
-    margin-bottom: 10px;
+    font-size: 28px;
+    font-weight: 700;
+    color: #00D4FF;
+    margin-bottom: 15px;
 }
 
 .hero-ea .ea-title {

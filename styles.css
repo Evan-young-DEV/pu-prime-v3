@@ -2116,10 +2116,17 @@ img {
 }
 
 .news-item {
+    display: block;
     font-size: 13px;
     color: var(--text-muted);
     padding: 8px 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.news-item:hover {
+    color: var(--accent-cyan);
 }
 
 .news-item:last-child {

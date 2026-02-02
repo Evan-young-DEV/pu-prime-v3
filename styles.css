@@ -1659,6 +1659,11 @@ img {
         margin-bottom: 15px;
     }
 
+    .hero-ea .ea-provider {
+        font-size: 14px;
+        margin-bottom: 3px;
+    }
+
     .hero-ea .ea-title {
         font-size: 22px;
         margin-bottom: -90px;
@@ -1772,6 +1777,10 @@ img {
     }
 
     .hero-label {
+        font-size: 12px;
+    }
+
+    .hero-ea .ea-provider {
         font-size: 12px;
     }
 
@@ -2121,6 +2130,13 @@ img {
 .hero-ea {
     margin-top: -5px;
     margin-bottom: 25px;
+}
+
+.hero-ea .ea-provider {
+    font-size: 16px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 5px;
 }
 
 .hero-ea .ea-title {

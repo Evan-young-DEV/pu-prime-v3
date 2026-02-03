@@ -1663,7 +1663,8 @@ img {
         font-size: 16px;
         font-weight: 700;
         color: #00D4FF;
-        margin-bottom: -5px;
+        margin-top: -10px;
+        margin-bottom: -15px;
     }
 
     .hero-ea .ea-title {

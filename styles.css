@@ -1664,13 +1664,14 @@ img {
         font-weight: 700;
         color: #00D4FF;
         margin-top: 0;
-        margin-bottom: 10px;
+        margin-bottom: 0;
         margin-left: -20px;
         text-align: left;
     }
 
     .hero-ea .ea-title {
         font-size: 22px;
+        margin-top: 0;
         margin-bottom: 10px;
     }
 

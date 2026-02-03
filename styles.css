@@ -2145,10 +2145,12 @@ img {
 }
 
 .hero-ea .ea-provider {
-    font-size: 52px;
+    font-size: 36px;
     font-weight: 700;
     color: #00D4FF;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
+    margin-top: 20px;
+    white-space: nowrap;
 }
 
 .hero-ea .ea-title {

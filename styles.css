@@ -1660,10 +1660,10 @@ img {
     }
 
     .hero-ea .ea-provider {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 700;
         color: #00D4FF;
-        margin-bottom: 8px;
+        margin-bottom: -5px;
     }
 
     .hero-ea .ea-title {
@@ -1783,9 +1783,10 @@ img {
     }
 
     .hero-ea .ea-provider {
-        font-size: 16px;
+        font-size: 14px;
         font-weight: 700;
         color: #00D4FF;
+        margin-bottom: -8px;
     }
 
     .hero-ea .ea-title {
@@ -2144,7 +2145,7 @@ img {
 }
 
 .hero-ea .ea-provider {
-    font-size: 28px;
+    font-size: 52px;
     font-weight: 700;
     color: #00D4FF;
     margin-bottom: 15px;

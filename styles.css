@@ -1637,7 +1637,7 @@ img {
 @media (max-width: 768px) {
     .hero-title {
         font-size: 24px;
-        margin-bottom: 0;
+        margin-bottom: -50px;
     }
 
     .hero-title .highlight {
@@ -1655,7 +1655,7 @@ img {
     }
 
     .hero-ea {
-        margin-top: 5px;
+        margin-top: -50px;
         margin-bottom: 15px;
         padding-top: 0;
     }
